@@ -20,9 +20,5 @@ int main() {
     Color col1 = Color::red;
     // std::cout << col1 <<'\n';
 
-    std::cout << sizeof(std::vector<int>) << '\n';
-    std::cout << sizeof(std::vector<double>) << '\n';
-    std::cout << sizeof(std::vector<std::string>) << '\n';
-
     return 0;
 }
