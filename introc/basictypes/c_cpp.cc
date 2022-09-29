@@ -25,7 +25,7 @@ int count_x_cpp(const std::string ss, char x) {
     return count;
 }
 
-int count_x(const char *p, char x) {
+int count_x_c(const char *p, char x) {
 
     if (p == nullptr) return 0;
     int count = 0;
@@ -42,10 +42,10 @@ int main(){
 
     // std::cout << i << j <<'\n';
     // copy_fct();
-    char mystring[] = "Jimrox Odeziiiiiiii Ogume";
-    std::cout << count_x(mystring, 'i') <<'\n';
+    char mystring[] = "Bob and Alice are like Romeo and Juliet, but for CS";
+    std::cout << count_x_c(mystring, 'i') <<'\n';
 
-    std::string str = "jimrox odezi ogume";
+    std::string str = "Bob and Alice are like Romeo and Juliet, but for CS";
     std::cout << count_x_cpp(str, 'o') <<'\n';
 
 }
