@@ -29,7 +29,7 @@ int count_x_c(const char *p, char x) {
 
     if (p == nullptr) return 0;
     int count = 0;
-    for(; *p != 0; ++p) {   // if the value at p[i] is not null-terminated
+    for(; *p != 0; ++p) {   // if (while) the value at p[i] is not null-termination
         if (*p == x) ++count;
     }
     return count;

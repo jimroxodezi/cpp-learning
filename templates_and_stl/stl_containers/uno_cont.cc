@@ -22,13 +22,12 @@ int main() {
     
     my_set.insert("yellow");
 
-    std::vector<std::string> vec = {"purple", "pink"};
+    std::vector<std::string> vec = {"purple", "pink", "purple"};
     my_set.insert(vec.begin(), vec.end());
 
     for (auto it : my_set) std::cout << it << " ";
     std::cout<<std::endl;
 
-    // Hash Table specific APIs
     std::cout << "Load factor = " << my_set.load_factor() << std::endl;
     std::string x = "red";
 
@@ -37,10 +36,21 @@ int main() {
 
     // unordered multiset: unordered set that allows duplicate keys
     // unordered map: unordered set of pairs
-    // unordered multimap: unordered mapo that allows duplicate keys
+    // unordered multimap: unordered map that allows duplicate keys
 
     // Hash collision causes degrade in performance. Hash collision means
     // many elements are inserted in the same bucket.
+
+    // keys cannot be modified.
+    std::unordered_map<char, std::string> week_day = {{'S', "Sunday"}, {'M', "Monday"}};
+    std::cout << week_day['S']<<'\n';
+
+    week_day['W'] = "Wednesday";
+    week_day.insert(std::make_pair('F', "Friday"));
+
+    for (const auto &day : week_day) {
+        std::cout << day.first << " => " << day.second <<'\n';
+    }
 
     return 0;
 }
