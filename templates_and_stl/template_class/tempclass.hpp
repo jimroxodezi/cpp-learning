@@ -1,4 +1,4 @@
-template<class T> class list {
+template<typename T> struct list {
     private:
         // linkedlist data structure
         typedef struct _list

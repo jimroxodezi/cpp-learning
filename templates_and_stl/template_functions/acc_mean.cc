@@ -6,7 +6,7 @@
 template<typename Iter, typename Val>
 Val acc(Iter first, Iter last, Val res){
     for (auto &i = first; i != last; ++i) { // first, last are pointers
-        res += *i;
+        res += i;
     }
     return res;
 }
