@@ -1,14 +1,15 @@
 #include <iostream>
 
-class scope_reporter {
-    std::string name;
+struct scope_reporter {
+    private:
+        std::string name;
     public:
-    scope_reporter(std::string _name): name{_name} {
-        std::cout << "Constructing " << name << '\n';
-    }
-    ~scope_reporter(){
-        std::cout << "Destroying " << name << '\n';
-    }
+        scope_reporter(std::string _name): name{_name} {
+            std::cout << "Constructing " << name << '\n';
+        }
+        ~scope_reporter(){
+            std::cout << "Destroying " << name << '\n';
+        }
 };
 
 void foo(){
