@@ -1,6 +1,8 @@
 #include <concepts>
 #include <iostream>
 
+// cpp20 concepts provide constraints on template params
+// compile with -std=c++20 flag
 
 // concepts evaluates to bool?
 template <typename T>
