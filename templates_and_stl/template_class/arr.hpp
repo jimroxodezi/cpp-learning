@@ -3,8 +3,10 @@
 
 template <typename T, std::size_t SZ>
 struct array {
+    // array of elements
     T elem[SZ];
 
+    // returns size of the array, the template param SZ
     std::size_t size() const {
         return SZ;
     }
@@ -20,7 +22,7 @@ struct array {
     typedef T* iterator;
 
     T* begin() {
-        return &elem[0]
+        return &elem[0];
     }
 
     T* end() {
