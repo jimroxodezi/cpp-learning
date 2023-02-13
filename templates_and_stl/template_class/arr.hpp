@@ -19,19 +19,19 @@ struct array {
         return elem[_index];
     }
 
-    typedef T* iterator;
+    typedef T *iterator;
 
-    T* begin() {
+    iterator begin() {
         return &elem[0];
     }
 
-    T* end() {
+    iterator end() {
         return &elem[0] + SZ;
     }
 
     typedef const T* const_iterator;
 
-    const T* cbegin() const { return &elem[0]; }
+    const_iterator cbegin() const { return &elem[0]; }
 
     const T* cend() const { return &elem[0] + SZ; }
 };

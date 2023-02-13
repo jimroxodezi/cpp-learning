@@ -15,4 +15,14 @@ int main(void) {
                 std::cout << *it << " ";
             }
     std::cout<<std::endl;
+
+    for (auto it = a.cbegin(); it != a.cend(); ++it) {
+        std::cout << *it << ",";
+    }
+    std::cout<<std::endl;
+
+    for (auto &v: a) {
+        std::cout << v << ",";
+    }
+    std::cout << std::endl;
 }
