@@ -27,7 +27,7 @@ struct if_<false, THEN, ELSE> : type_is<ELSE> {};
 // struct if_<false, THEN, ELSE> { using type = THEN; };
 
 // // template <bool,typename T, typename F>
-// // static constexpr bool if_v = if_<true,T,F>::type;
+// // static constexpr bool if_v = if_<true,T, F>;
 
 // bool contains(const std::string& search, const std::vector<std::string>& vec, size_t start_from = 0)
 // {
@@ -50,15 +50,15 @@ struct if_<false, THEN, ELSE> : type_is<ELSE> {};
 template <typename SEARCH, typename TUPLE, size_t start_from = 0>
 struct contains_type :
     if_<
-        std::is_same<typename std::tuple_element<start_from, TUPLE>::type, SEARCH>::value,
+        std::is_same_v<std::tuple_element_t<start_from, TUPLE>, SEARCH>,
         // THEN
         typename std::true_type,
         // ELSE
         typename if_ <
-            (start_from == std::tuple_size<TUPLE>::value - 1),
+            (start_from == std::tuple_size_v<TUPLE> - 1),
             typename std::false_type,
             // ELSE
-            contains_type<SEARCH, TUPLE, start_from+1>
+            contains_type<SEARCH, TUPLE, start_from+1u>
         >::type
     >::type
 {};
@@ -87,6 +87,9 @@ int main(){
     // std::cout << std::boolalpha << std::is_same_v<int, if_<(10<5), int, float>::type> << "\n";
 
     std::tuple<int, float, double, std::string> t;
-    std::cout << std::boolalpha << contains_type<int, std::tuple<int, float, std::string>>::value << "\n";
-    std::cout << std::boolalpha << contains_type<int, decltype(t)>::value << "\n";
+    // std::cout << std::boolalpha << contains_type<int, std::tuple<int, float, std::string>>::value << "\n";
+    // std::cout << std::boolalpha << contains_type<int, decltype(t)>::value << "\n";
+
+    static_assert(contains_type<float, std::tuple<int, float, double, std::string>>::value == true);
+    static_assert(contains_type<int, decltype(t)>::value == true);
 }
