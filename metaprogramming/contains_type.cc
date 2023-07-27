@@ -63,6 +63,10 @@ struct contains_type :
     >::type
 {};
 
+// partial specialization to handle the case of an empty tuple
+template <typename SEARCH>
+struct contains_type<SEARCH, std::tuple<>, 0> : std::false_type {};
+
 // // using standard library typetrait std::conditional_t<...>
 // template <typename SEARCH, typename TUPLE, size_t start_from = 0>
 // struct contains_type :
@@ -92,4 +96,6 @@ int main(){
 
     static_assert(contains_type<float, std::tuple<int, float, double, std::string>>::value == true);
     static_assert(contains_type<int, decltype(t)>::value == true);
+
+    // std::cout << std::boolalpha << std::true_type::value << "\n";
 }
