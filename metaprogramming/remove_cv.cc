@@ -1,22 +1,31 @@
 #include <type_traits>
 
-
+// identity metafunction...
+// canonical type returning function.
 template <typename T>
-struct remove_const { using type = T; };
+struct type_is { using type = T; };
+
+template <class T>
+struct remove_const : type_is<T> {};
 
 // specialization to remove type quilifier
 template <typename T>
-struct remove_const<T const> { using type = T; };
-
-// identity metafunction...
-template <typename T>
-struct type_is { using type = T; };
+struct remove_const<T const> : type_is<T> {};
 
 template <typename T>
 struct remove_volatile : type_is<T>{};
 
 template <typename T>
 struct remove_volatile<T volatile> : type_is<T> {};
+
+// convenience aliases
+template <class T> using remove_const_t     = typename remove_const<T>::type;
+template <class T> using remove_volatile_t  = typename remove_volatile<T>::type;
+
+template <class T> using remove_cv          = remove_volatile_t<remove_const_t<T>>;
+template <class T> using remove_cv_t        = typename remove_cv<T>::type;
+
+/******************************************************************************************************/
 
 // std::conditional_t<T>
 template <bool Cond, typename T, typename>
@@ -25,7 +34,8 @@ struct my_conditional : type_is<T> {};
 template <typename T, typename F>
 struct my_conditional<false, T, F> : type_is<F> {};
 
-/**
+
+/*********************************************************************************************************
  * mimick std::enable_if
  * 
  * default template argument <void> useful. During template instantiation the compiler
@@ -70,11 +80,11 @@ using my_true_type = my_bool_constant<true>;
 using my_false_type = my_bool_constant<false>;
 
 
-// int main()
-// {
+int main()
+{
 
-//     // static_assert(remove_const<int const>::type == int);
-//     // static_assert(remove_const<const double>::type == int);
-//     // std::enable_if_t<int>
-// std::is_integral<23>
-// }
+    // static_assert(remove_const<int const>::type == int);
+    // static_assert(remove_const<const double>::type == int);
+    // std::enable_if_t<int>
+    // std::is_integral<23>
+}

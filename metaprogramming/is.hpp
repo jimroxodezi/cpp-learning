@@ -1,6 +1,6 @@
 #include <type_traits>
 
-
+/**********************************************************************************/
 template <typename T>
 struct is_void : std::false_type {};
 
@@ -16,6 +16,8 @@ constexpr bool is_void_v = is_void<T>::value;
 
 static_assert(is_void_v<const void>);
 
+
+/***************************************************************************************/
 // primary template for distinct types
 template <class T, class U> struct is_same : std::false_type {};
 
