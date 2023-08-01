@@ -2,23 +2,15 @@
 
 
 template <typename T>
-struct remove_const
-{
-    using type = T;
-};
+struct remove_const { using type = T; };
 
 // specialization to remove type quilifier
 template <typename T>
-struct remove_const<T const>
-{
-    using type = T;
-};
+struct remove_const<T const> { using type = T; };
 
+// identity metafunction...
 template <typename T>
-struct type_is
-{
-    using type = T;
-};
+struct type_is { using type = T; };
 
 template <typename T>
 struct remove_volatile : type_is<T>{};
@@ -54,6 +46,11 @@ struct my_enable_if : type_is<T>{};
 template <typename T>
 struct my_enable_if<false, T> {};
 
+/**
+ * C++11 canonical value returning metafunction.
+ * Takes the type of the value T and the actual value val
+ * as template parameters and returns the value
+*/
 template <typename T, T val>
 struct my_integral_constant
 {
@@ -62,11 +59,15 @@ struct my_integral_constant
     constexpr T operator()() const noexcept { return value; }
 };
 
-template <bool B>
-using bool_constant = my_integral_constant<bool, B>;
+using m_true_type = my_integral_constant<bool, true>;
+using m_false_type = my_integral_constant<bool, false>;
 
-using my_true_type = bool_constant<true>;
-using my_false_type = bool_constant<false>;
+template <bool B>
+using my_bool_constant = my_integral_constant<bool, B>;
+
+// same as above.....
+using my_true_type = my_bool_constant<true>;
+using my_false_type = my_bool_constant<false>;
 
 
 // int main()
