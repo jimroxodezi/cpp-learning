@@ -22,7 +22,8 @@ struct remove_volatile<T volatile> : type_is<T> {};
 template <class T> using remove_const_t     = typename remove_const<T>::type;
 template <class T> using remove_volatile_t  = typename remove_volatile<T>::type;
 
-template <class T> using remove_cv          = remove_volatile_t<remove_const_t<T>>;
+// remove_cv
+template <class T> using remove_cv          = remove_volatile<remove_const_t<T>>;
 template <class T> using remove_cv_t        = typename remove_cv<T>::type;
 
 /******************************************************************************************************/

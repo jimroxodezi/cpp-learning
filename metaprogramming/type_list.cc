@@ -87,21 +87,42 @@ struct contains<Search, type_list<>> : std::false_type{};
 // recursively remove first type and look for index
 // at first index of new type.
 template <typename Typelist, std::size_t Index>
-struct at_ {
-    using type = typename at_<pop_front_t<Typelist>, Index-1>;
-};
+struct at_ : type_is<typename at_<pop_front_t<Typelist>, Index-1>::type> {};
 
 // specialization as base case to find the type at first index
 template <typename TypeList>
 struct at_<TypeList, 0> : type_is<front_t<TypeList>> {};
 
 template <typename TypeList, std::size_t Index>
-using at_t = typename at_<TypeList, Index>;
-
-static_assert(std::is_same_v<int, at_t<type_list<float, int, double>, 1u>> == true);
+using at_t = typename at_<TypeList, Index>::type;
 
 template <typename Typelist, std::size_t Index>
 using at_v = at_<Typelist,Index>;
+
+static_assert(std::is_same<at_t<type_list<float, int, double>, 1U>, int>::value);
+
+// back element of type_list<...>
+template <typename TypeList>
+struct back : type_is<typename back<pop_front_t<TypeList>>::type>{};
+
+// specialization to handle base case of type_list containing only one type (ListElement)
+// general case recursive pops the front element till we get to the last element
+template <typename ListELement>
+struct back<type_list<ListELement>> : type_is<ListELement> {};
+
+template <typename TypeList>
+using back_t = typename back<TypeList>::type;
+
+static_assert(std::is_same_v<back_t<type_list<float, double, int>>,int>);
+
+// add element to back of type_list<...>
+template <typename Typelist>
+struct push_back;
+
+template <typename... ListElements, typename LastElement>
+struct push_back<type_list<LastElement, ListElements...>> : type_is<LastElement, ListElements...> {};
+
+// convenience function
 
 int main()
 {

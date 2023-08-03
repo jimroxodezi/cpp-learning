@@ -26,12 +26,13 @@ struct if_<false, THEN, ELSE> : type_is<ELSE> {};
 // template <typename THEN, typename ELSE>
 // struct if_<false, THEN, ELSE> { using type = THEN; };
 
-// // template <bool,typename T, typename F>
-// // static constexpr bool if_v = if_<true,T, F>;
+// template <bool Cond,typename T, typename F>
+// constexpr bool if_v = if_<Cond,T, F>;
+
 
 // bool contains(const std::string& search, const std::vector<std::string>& vec, size_t start_from = 0)
 // {
-//     if (vec[start_from] == search) {
+//     if (vec[start_from] == search) 
 //         return true;
 //     } else {
 //         if (start_from == vec.size() - 1) {
@@ -63,9 +64,11 @@ struct contains_type :
     >::type
 {};
 
+
 // partial specialization to handle the case of an empty tuple
 template <typename SEARCH>
 struct contains_type<SEARCH, std::tuple<>, 0> : std::false_type {};
+
 
 // // using standard library typetrait std::conditional_t<...>
 // template <typename SEARCH, typename TUPLE, size_t start_from = 0>
@@ -97,5 +100,5 @@ int main(){
     static_assert(contains_type<float, std::tuple<int, float, double, std::string>>::value == true);
     static_assert(contains_type<int, decltype(t)>::value == true);
 
-    // std::cout << std::boolalpha << std::true_type::value << "\n";
+    std::cout << std::boolalpha << std::true_type::value << "\n";
 }
